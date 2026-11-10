@@ -189,10 +189,9 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [ ] Reference scenario with recorded demo (GIF/video)
 - [ ] Orchestrator reference implementation
 - [ ] Federated aggregation prototype
-- [ ] CI pipeline for Gem build and Python tests
+- [x] CI pipeline for Gem build and Python tests
 
 > Contributions and issues are welcome.
-
 ---
 
 ## 🛠 Tech Stack
