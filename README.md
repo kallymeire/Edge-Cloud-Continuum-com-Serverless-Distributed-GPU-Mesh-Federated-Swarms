@@ -2,6 +2,22 @@
 
 # 🌐 Edge-Cloud Continuum
 
+<p align="center">
+  <a href="https://kallymeire.github.io/Edge-Cloud-Continuum-com-Serverless-Distributed-GPU-Mesh-Federated-Swarms/Docs/edge-cloud-demo/">
+    <img src="Docs/assets/architecture.svg" alt="Edge-Cloud Continuum: clique para abrir a demo interativa" width="100%">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://kallymeire.github.io/Edge-Cloud-Continuum-com-Serverless-Distributed-GPU-Mesh-Federated-Swarms/Docs/edge-cloud-demo/">
+    <img src="https://img.shields.io/badge/▶_ABRIR_DEMO_INTERATIVA-4cc9f0?style=for-the-badge&labelColor=0c1120" alt="Abrir demo interativa">
+  </a>
+</p>
+
+<p align="center">
+  <img src="Docs/assets/architecture.svg" alt="Edge-Cloud Continuum: animated architecture" width="100%">
+</p>
+
 ### Serverless Distributed GPU Mesh & Federated Swarms for Autonomous Systems
 
 **An Open 3D Engine (O3DE) framework for physics-accurate simulation, domain-randomized synthetic data and LLM-driven agents — split across edge and cloud.**
