@@ -197,7 +197,7 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [x] Domain randomization module (PhysX + Atom parameters)
 - [x] Headless container specification
 - [ ] Benchmarks: frame throughput and cold-start time (measured, published)
-- [ ] Reference scenario with recorded demo (GIF/video)
+- [x] Animated architecture diagram and interactive demo
 - [ ] Orchestrator reference implementation
 - [ ] Federated aggregation prototype
 - [x] CI pipeline for Gem build and Python tests
