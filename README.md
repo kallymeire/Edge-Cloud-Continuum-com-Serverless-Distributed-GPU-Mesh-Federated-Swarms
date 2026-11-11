@@ -2,11 +2,6 @@
 
 # 🌐 Edge-Cloud Continuum
 
-<p align="center">
-  <a href="https://kallymeire.github.io/Edge-Cloud-Continuum-com-Serverless-Distributed-GPU-Mesh-Federated-Swarms/Docs/edge-cloud-demo/">
-    <img src="Docs/assets/architecture.svg" alt="Edge-Cloud Continuum: clique para abrir a demo interativa" width="100%">
-  </a>
-</p>
 
 <p align="center">
   <a href="https://kallymeire.github.io/Edge-Cloud-Continuum-com-Serverless-Distributed-GPU-Mesh-Federated-Swarms/Docs/edge-cloud-demo/">
