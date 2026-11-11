@@ -199,7 +199,7 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [ ] Benchmarks: frame throughput and cold-start time (measured, published)
 - [x] Animated architecture diagram and interactive demo
 - [ ] Orchestrator reference implementation
-- [ ] Federated aggregation prototype
+- [x] Federated aggregation prototype
 - [x] CI pipeline for Gem build and Python tests
 
 > Contributions and issues are welcome.
