@@ -226,8 +226,7 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 | :--- | :--- | :--- | :--- |
 | Monolithic VM | Billed continuously | Limited to one machine | Manual |
 | Standard Kubernetes | Persistent cluster sizing | High, bounded by node pools | Automatic pod restarts |
-| **Serverless GPU mesh (this project)** | Pay per execution | Elastic, scales with queue | Retry/respawn of stateless workers |
-
+| **Serverless GPU mesh (target design)** | Pay per execution | Elastic, scales with queue | Retry/respawn of stateless workers (design goal, not implemented yet) |
 ---
 
 ## 🗺 Roadmap
@@ -238,6 +237,7 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [x] Seeded domain randomizer with configurable ranges (physics, environment, camera)
 - [x] Parallel scenario generator CLI
 - [x] Benchmark of scenario generation throughput (episodes/s and frames/s by worker count)
+- [x] Benchmark of federated traffic savings (top-k sweep, 5 seeds)
 - [x] Federated aggregation prototype (top-k compression with error feedback, 11 tests)
 - [x] LLM agent bridge with validated output and rule-based fallback (5 tests, mocked endpoint)
 - [x] CI running the Python test suite (16 tests)
@@ -247,7 +247,6 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [ ] Gem build files (`gem.json`, `CMakeLists.txt`) and a component that loads in the O3DE Editor
 - [ ] Apply generated scenarios to PhysX bodies and Atom settings inside O3DE
 - [ ] Validate the bridge against a real local model (Ollama)
-- [x] Benchmark of federated traffic savings (top-k sweep, 5 seeds)
 - [ ] Validate the headless container with GPU rendering
 - [ ] Orchestrator reference implementation
 
