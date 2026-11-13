@@ -13,6 +13,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from core.domain_randomizer import generate_episode  # noqa: E402
+from core.orchestrator import run_jobs  # noqa: E402
 
 
 def _write_episode(args):
@@ -31,8 +32,14 @@ def main():
     parser.add_argument("--workers", type=int, default=4, help="Parallel worker processes")
     parser.add_argument("--seed", type=int, default=0, help="Base random seed")
     parser.add_argument("--episodes", type=int, help="Override episode count from config")
+    parser.add_argument("--orchestrated", action="store_true",
+                        help="Run each episode in its own process and retry it if it crashes or times out")
+    parser.add_argument("--max-retries", type=int, default=2,
+                        help="Extra attempts per episode with --orchestrated")
+    parser.add_argument("--timeout", type=float, default=60.0,
+                        help="Seconds before an attempt is killed with --orchestrated")
     parser.add_argument("--enable-llm-agents", action="store_true",
-                        help="Reserved: LLM bridge is not implemented yet")
+                        help="Reserved: LLM bridge is not wired into this CLI yet")
     args = parser.parse_args()
 
     with open(args.config, encoding="utf-8") as f:
@@ -40,13 +47,28 @@ def main():
     episodes = args.episodes or config["episodes"]
 
     if args.enable_llm_agents:
-        print("[WARN] --enable-llm-agents: LLM bridge not implemented yet, ignoring.")
+        print("[WARN] --enable-llm-agents: LLM bridge is not wired into this CLI yet, ignoring.")
 
     os.makedirs(args.output_dir, exist_ok=True)
     print(f"[INIT] {episodes} episodes, {args.workers} workers, seed={args.seed}")
 
     jobs = [(config, i, args.seed, args.output_dir) for i in range(episodes)]
     start = time.perf_counter()
+
+    if args.orchestrated:
+        report = run_jobs(
+            _write_episode, jobs, max_parallel=args.workers,
+            max_retries=args.max_retries, timeout=args.timeout,
+        )
+        elapsed = time.perf_counter() - start
+        retried = sum(1 for n in report.attempts.values() if n > 1)
+        print(f"[DONE] {len(report.completed)} completed, {len(report.failed)} failed, "
+              f"{retried} needed a retry, in {elapsed:.2f}s")
+        if report.failed:
+            print(f"[FAIL] episodes that ran out of retries: {report.failed}")
+            sys.exit(1)
+        return
+
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
         paths = list(pool.map(_write_episode, jobs))
     elapsed = time.perf_counter() - start
