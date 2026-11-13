@@ -1,0 +1,13 @@
+{
+    "gem_name": "EdgeCloudContinuum",
+    "display_name": "Edge-Cloud Continuum",
+    "license": "MIT",
+    "origin": "Kallymeire Coelho",
+    "origin_url": "https://github.com/kallymeire",
+    "type": "Code",
+    "summary": "Cognitive agent component and EBus interface for the Edge-Cloud Continuum simulation project. Early draft, not yet compiled.",
+    "canonical_tags": ["Gem"],
+    "user_tags": ["Simulation", "EBus"],
+    "requirements": "",
+    "dependencies": []
+}
