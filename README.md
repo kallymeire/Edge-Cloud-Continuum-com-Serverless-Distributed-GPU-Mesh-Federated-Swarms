@@ -92,6 +92,22 @@ The edge node runs physics and control locally. Heavy rendering jobs are queued 
 - Perturbs **Atom** environment (fog density, sun azimuth, PBR roughness) and camera pose per frame
 - Purpose: reduce overfitting to a single simulated look, improve sim-to-real transfer
 
+## 📈 Benchmarks
+
+Scenario generation throughput (`python Pipeline/benchmark.py`): 2000 episodes, 5 frames per episode, JSON written to disk.
+
+**Machine:** Intel64 (Family 6 Model 42), 4 logical CPUs, Python 3.10.11
+
+| Workers | Time (s) | Episodes/s | Frames/s |
+| ---: | ---: | ---: | ---: |
+| 1 | 25.14 | 80 | 398 |
+| 2 | 11.77 | 170 | 850 |
+| 4 | 10.57 | 189 | 946 |
+| 8 | 11.76 | 170 | 850 |
+
+Throughput scales up to 
+the number of logical CPUs and does not improve beyond it. Each configuration was run once, so small differences are within noise. This measures CPU-side scenario generation only, with no rendering. Results depend on the machine.
+
 ### 🤖 LLM Agent Bridge
 - Python bridge connecting an LLM reasoning loop to in-engine agents
 - The LLM proposes scenarios and goals; the engine validates and executes them
@@ -196,7 +212,8 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [x] Native Gem with EBus component skeleton
 - [x] Domain randomization module (PhysX + Atom parameters)
 - [x] Headless container specification
-- [ ] Benchmarks: frame throughput and cold-start time (measured, published)
+- [x] Benchmark of scenario generation throughput (episodes/s and frames/s by worker count)
+- [ ] Benchmark of federated traffic savings
 - [x] Animated architecture diagram and interactive demo
 - [x] Orchestrator reference implementation
 - [x] Federated aggregation prototype
