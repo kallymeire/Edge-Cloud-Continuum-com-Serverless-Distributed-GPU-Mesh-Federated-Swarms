@@ -17,7 +17,7 @@
 
 ### Serverless Distributed GPU Mesh & Federated Swarms for Autonomous Systems
 
-**An Open 3D Engine (O3DE) framework for physics-accurate simulation, domain-randomized synthetic data and LLM-driven agents — split across edge and cloud.**
+**An Open 3D Engine (O3DE) project for domain-randomized simulation scenarios, with a federated aggregation prototype and an LLM agent bridge (tested against a mocked endpoint). C++ Gem and cloud pieces in progress.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![O3DE](https://img.shields.io/badge/O3DE-23.10%2B-orange?style=for-the-badge)](https://o3de.org/)
@@ -211,15 +211,24 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 
 ## 🗺 Roadmap
 
-- [x] Native Gem with EBus component skeleton
-- [x] Domain randomization module (PhysX + Atom parameters)
-- [x] Headless container specification
+## 🗺 Roadmap
+
+**Done and verified**
+- [x] Seeded domain randomizer with configurable ranges (physics, environment, camera)
+- [x] Parallel scenario generator CLI
 - [x] Benchmark of scenario generation throughput (episodes/s and frames/s by worker count)
+- [x] Federated aggregation prototype (top-k compression with error feedback, 11 tests)
+- [x] LLM agent bridge with validated output and rule-based fallback (5 tests, mocked endpoint)
+- [x] CI running the Python test suite (16 tests)
+- [x] Architecture diagram
+
+**In progress / planned**
+- [ ] Gem build files (`gem.json`, `CMakeLists.txt`) and a component that loads in the O3DE Editor
+- [ ] Apply generated scenarios to PhysX bodies and Atom settings inside O3DE
+- [ ] Validate the bridge against a real local model (Ollama)
 - [ ] Benchmark of federated traffic savings
-- [x] Animated architecture diagram and interactive demo
-- [x] Orchestrator reference implementation
-- [x] Federated aggregation prototype
-- [x] CI pipeline for Gem build and Python tests
+- [ ] Validate the headless container with GPU rendering
+- [ ] Orchestrator reference implementation
 
 > Contributions and issues are welcome.
 ---
