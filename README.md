@@ -183,14 +183,20 @@ Edge-Cloud-Continuum-Serverless-GPU-Mesh/
 
 ### 1. Register and build the Gem
 
-```bash
+`bash
 # Register the Gem with your O3DE installation
 o3de.bat register --gem-path ./Gem
 
 # Configure and build in Release mode
 cmake -B build/ -S . -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release
 cmake --build build/ --target CognitiveAgentGem.Packages --config Release
-```
+
+### Run with Docker
+
+bash
+docker build -f Infrastructure/docker/Dockerfile.pipeline -t edge-cloud-pipeline .
+docker run --rm -v "$PWD/out:/out" edge-cloud-pipeline
+
 
 ### 2. Run the headless simulation and data pipeline
 
@@ -237,20 +243,22 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [x] Seeded domain randomizer with configurable ranges (physics, environment, camera)
 - [x] Parallel scenario generator CLI
 - [x] Benchmark of scenario generation throughput (episodes/s and frames/s by worker count)
-- [x] Benchmark of federated traffic savings (top-k sweep, 5 seeds)
 - [x] Federated aggregation prototype (top-k compression with error feedback, 11 tests)
+- [x] Benchmark of federated traffic savings (top-k sweep, 5 seeds)
 - [x] LLM agent bridge with validated output and rule-based fallback (5 tests, mocked endpoint)
 - [x] CI running the Python test suite (16 tests)
+- [x] Dockerfile for the scenario generator (`docker build` and `docker run` verified; no GPU, no O3DE)
 - [x] Architecture diagram
 
 **In progress / planned**
 - [ ] Gem build files (`gem.json`, `CMakeLists.txt`) and a component that loads in the O3DE Editor
 - [ ] Apply generated scenarios to PhysX bodies and Atom settings inside O3DE
 - [ ] Validate the bridge against a real local model (Ollama)
-- [ ] Validate the headless container with GPU rendering
+- [ ] Headless O3DE container with Vulkan/EGL (draft Dockerfile, not validated)
 - [ ] Orchestrator reference implementation
 
 > Contributions and issues are welcome.
+
 ---
 
 ## 🛠 Tech Stack

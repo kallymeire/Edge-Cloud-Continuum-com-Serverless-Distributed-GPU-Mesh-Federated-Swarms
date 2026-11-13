@@ -1,0 +1,9 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir numpy
+
+COPY Pipeline Pipeline
+
+CMD ["python", "Pipeline/run_simulation.py", "--config", "Pipeline/config.json", "--output-dir", "/out", "--workers", "2", "--seed", "7"]
