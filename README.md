@@ -280,13 +280,14 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [x] CI running the Python test suite (16 tests)
 - [x] Dockerfile for the scenario generator (`docker build` and `docker run` verified; no GPU, no O3DE)
 - [x] Architecture diagram
+- [x] Local orchestrator reference: spawn per job, retry on crash or timeout (4 tests; single machine, no cloud)
 
 **In progress / planned**
 - [ ] Compile the Gem in O3DE and load the component in the Editor (sources, `gem.json`, CMake files and module class written; never compiled, see `Gem/README.md`)
 - [ ] Apply generated scenarios to PhysX bodies and Atom settings inside O3DE
 - [ ] Validate the bridge against a real local model (Ollama)
 - [ ] Headless O3DE container with Vulkan/EGL (draft Dockerfile, not validated)
-- [ ] Orchestrator reference implementation
+
 
 > Contributions and issues are welcome.
 
