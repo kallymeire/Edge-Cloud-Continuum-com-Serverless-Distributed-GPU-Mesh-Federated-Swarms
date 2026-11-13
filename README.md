@@ -175,28 +175,43 @@ Edge-Cloud-Continuum-Serverless-GPU-Mesh/
 ## ⚡ Quick Start
 
 ### Prerequisites
-- O3DE **23.10+**, Visual Studio 2022 (Windows) with the C++ workload
-- CMake 3.24+
 - Python 3.10+
-- NVIDIA GPU with Vulkan support (for local rendering)
-- Docker (for headless runs)
+- Docker (optional, for the container run)
+- O3DE 23.10+, Visual Studio 2022 and CMake 3.24+ are only needed for the Gem, which is not buildable yet
 
-### 1. Register and build the Gem
+### 1. Run the tests
 
-`bash
-# Register the Gem with your O3DE installation
-o3de.bat register --gem-path ./Gem
+```bash
+pip install -r Pipeline/requirements.txt
+python -m pytest Pipeline/tests -v
+```
 
-# Configure and build in Release mode
-cmake -B build/ -S . -G "Visual Studio 17 2022" -DCMAKE_BUILD_TYPE=Release
-cmake --build build/ --target CognitiveAgentGem.Packages --config Release
+### 2. Generate randomized scenarios
 
-### Run with Docker
+```bash
+python Pipeline/run_simulation.py \
+  --config Pipeline/config.json \
+  --output-dir ./Datasets/synthetic_output \
+  --workers 4 \
+  --seed 7
+```
 
-bash
+Output: one `episode_XXXXX.json` file per episode in `Datasets/synthetic_output/`.
+
+### 3. Run with Docker
+
+```bash
 docker build -f Infrastructure/docker/Dockerfile.pipeline -t edge-cloud-pipeline .
 docker run --rm -v "$PWD/out:/out" edge-cloud-pipeline
+```
 
+On Windows PowerShell, use `"${PWD}/out:/out"` for the volume.
+
+### 4. O3DE Gem
+
+Not runnable yet. The component sources are in `Gem/Code`, but the build files (`gem.json`, `CMakeLists.txt`) are still missing. Build instructions will be added once it compiles in O3DE.
+
+---
 
 ### 2. Run the headless simulation and data pipeline
 
