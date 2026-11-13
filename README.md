@@ -269,6 +269,7 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 ## 🗺 Roadmap
 
 ## 🗺 Roadmap
+## 🗺 Roadmap
 
 **Done and verified**
 - [x] Seeded domain randomizer with configurable ranges (physics, environment, camera)
@@ -277,17 +278,15 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [x] Federated aggregation prototype (top-k compression with error feedback, 11 tests)
 - [x] Benchmark of federated traffic savings (top-k sweep, 5 seeds)
 - [x] LLM agent bridge with validated output and rule-based fallback (5 tests, mocked endpoint)
-- [x] CI running the Python test suite (16 tests)
+- [x] Local orchestrator reference: spawn per job, retry on crash or timeout (4 tests; single machine, no cloud)
+- [x] CI running the Python test suite (20 tests)
 - [x] Dockerfile for the scenario generator (`docker build` and `docker run` verified; no GPU, no O3DE)
 - [x] Architecture diagram
-- [x] Local orchestrator reference: spawn per job, retry on crash or timeout (4 tests; single machine, no cloud)
 
-**In progress / planned**
-- [ ] Compile the Gem in O3DE and load the component in the Editor (sources, `gem.json`, CMake files and module class written; never compiled, see `Gem/README.md`)
-- [ ] Apply generated scenarios to PhysX bodies and Atom settings inside O3DE
-- [ ] Validate the bridge against a real local model (Ollama)
-- [ ] Headless O3DE container with Vulkan/EGL (draft Dockerfile, not validated)
-
+**Next (needs a machine with a DirectX 12 or Vulkan GPU)**
+- Compile the Gem in O3DE and load the component in the Editor (draft written, see `Gem/README.md`)
+- Apply generated scenarios to PhysX bodies and Atom settings
+- Validate the LLM bridge against a real local model
 
 > Contributions and issues are welcome.
 
