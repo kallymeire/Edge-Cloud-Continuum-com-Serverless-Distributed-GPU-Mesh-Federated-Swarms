@@ -13,6 +13,8 @@
   <img src="Docs/assets/architecture.svg" alt="Edge-Cloud Continuum: animated architecture" width="100%">
 </p>
 
+[![CI](https://github.com/kallymeire/Edge-Cloud-Continuum-com-Serverless-Distributed-GPU-Mesh-Federated-Swarms/actions/workflows/ci.yml/badge.svg)](https://github.com/kallymeire/Edge-Cloud-Continuum-com-Serverless-Distributed-GPU-Mesh-Federated-Swarms/actions/workflows/ci.yml)
+
 ### Serverless Distributed GPU Mesh & Federated Swarms for Autonomous Systems
 
 **An Open 3D Engine (O3DE) framework for physics-accurate simulation, domain-randomized synthetic data and LLM-driven agents — split across edge and cloud.**
