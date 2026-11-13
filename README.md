@@ -96,7 +96,9 @@ The edge node runs physics and control locally. Heavy rendering jobs are queued 
 
 ## 📈 Benchmarks
 
-Scenario generation throughput (`python Pipeline/benchmark.py`): 2000 episodes, 5 frames per episode, JSON written to disk.
+### Scenario generation
+
+Run with `python Pipeline/benchmark.py`: 2000 episodes, 5 frames per episode, JSON written to disk.
 
 **Machine:** Intel64 (Family 6 Model 42), 4 logical CPUs, Python 3.10.11
 
@@ -107,8 +109,27 @@ Scenario generation throughput (`python Pipeline/benchmark.py`): 2000 episodes, 
 | 4 | 10.57 | 189 | 946 |
 | 8 | 11.76 | 170 | 850 |
 
-Throughput scales up to 
-the number of logical CPUs and does not improve beyond it. Each configuration was run once, so small differences are within noise. This measures CPU-side scenario generation only, with no rendering. Results depend on the machine.
+Throughput scales up to the number of logical CPUs and does not improve beyond it. Each configuration was run once, so small differences are within noise. This measures CPU-side scenario generation only, with no rendering. Results depend on the machine.
+
+### Federated aggregation: traffic vs. accuracy
+
+Run with `python Pipeline/benchmark_federated.py`. Setup: 8 workers, 30 rounds, 64 features, 500 samples per worker, averaged over 5 seeds (mean ± standard deviation). Each worker sends a top-k sparsified, int8-quantized delta-w with error feedback.
+
+| Top-k | Federated acc | Gap vs centralized | Sent (KiB) | vs dense float32 | vs raw data |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 0.849 ± 0.024 | +0.000 ± 0.003 | 46.6 | 1.3x | 21.5x |
+| 0.5 | 0.850 ± 0.024 | +0.000 ± 0.004 | 24.1 | 2.5x | 41.6x |
+| 0.25 | 0.850 ± 0.024 | -0.000 ± 0.004 | 12.9 | 4.7x | 77.9x |
+| 0.1 | 0.849 ± 0.025 | +0.001 ± 0.002 | 5.9 | 10.4x | 171.3x |
+| 0.05 | 0.844 ± 0.026 | +0.006 ± 0.004 | 3.8 | 16.2x | 267.7x |
+| 0.02 | 0.841 ± 0.027 | +0.009 ± 0.009 | 2.3 | 26.0x | 428.3x |
+
+- Down to top-k = 0.1, federated accuracy matches centralized training within noise while sending about 10x less than dense float32 deltas.
+- At 0.05 and 0.02 a small accuracy gap appears (about 0.6 and 0.9 points).
+- "Gap" is centralized accuracy minus federated accuracy, so positive means federated is slightly worse.
+- **Limits:** this is a synthetic logistic-regression setup, so it demonstrates the communication pattern, not a real robotics workload. The saving versus raw data depends on model size relative to dataset size and should not be generalized. With top-k = 1 the 1.3x comes from int8 quantization alone.
+
+---
 
 ### 🤖 LLM Agent Bridge
 - Python bridge connecting an LLM reasoning loop to in-engine agents
@@ -226,7 +247,7 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [ ] Gem build files (`gem.json`, `CMakeLists.txt`) and a component that loads in the O3DE Editor
 - [ ] Apply generated scenarios to PhysX bodies and Atom settings inside O3DE
 - [ ] Validate the bridge against a real local model (Ollama)
-- [ ] Benchmark of federated traffic savings
+- [x] Benchmark of federated traffic savings (top-k sweep, 5 seeds)
 - [ ] Validate the headless container with GPU rendering
 - [ ] Orchestrator reference implementation
 
