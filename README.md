@@ -47,6 +47,8 @@ Training perception and control models for robots and autonomous vehicles needs 
 The simulation runs inside **O3DE** through a native **C++17 Gem**, and is automated end-to-end by a **Python pipeline**.
 
 ---
+Project Status
+| O3DE Gem (C++17) | 🚧 Draft | Sources, `gem.json`, CMake files and module class written; never compiled |
 
 ## 🏛 Architecture
 
@@ -148,25 +150,39 @@ Run with `python Pipeline/benchmark_federated.py`. Setup: 8 workers, 30 rounds, 
 ## 📂 Repository Structure
 
 ```text
-Edge-Cloud-Continuum-Serverless-GPU-Mesh/
-├── Gem/                                  # Native C++ O3DE extension
+.
+├── .github/workflows/
+│   └── ci.yml                          # CI: runs the Python test suite
+├── Gem/                                # O3DE Gem: draft, not compiled
+│   ├── gem.json
+│   ├── CMakeLists.txt
+│   ├── README.md                       # status and how to validate
 │   └── Code/
-│       ├── Include/
-│       │   └── CognitiveAgentBus.h       # EBus interface
+│       ├── CMakeLists.txt
+│       ├── Include/EdgeCloudContinuum/
+│       │   └── CognitiveAgentBus.h
 │       └── Source/
 │           ├── CognitiveAgentComponent.h
-│           └── CognitiveAgentComponent.cpp   # Core engine logic
-├── Pipeline/                             # Python automation & AI integration
+│           ├── CognitiveAgentComponent.cpp
+│           └── EdgeCloudContinuumModule.cpp
+├── Pipeline/                           # Python: tested and benchmarked
 │   ├── core/
-│   │   ├── domain_randomizer.py          # PhysX & Atom perturbation
-│   │   └── llm_agent_bridge.py           # LLM ↔ engine bridge
-│   └── run_simulation.py                 # Headless runner CLI
-├── Infrastructure/
-│   └── docker/
-│       └── Dockerfile.o3de-headless      # Headless Vulkan/EGL image
+│   │   ├── domain_randomizer.py
+│   │   ├── federated_aggregator.py
+│   │   └── llm_agent_bridge.py
+│   ├── tests/
+│   ├── benchmark.py
+│   ├── benchmark_federated.py
+│   ├── config.json
+│   ├── requirements.txt
+│   └── run_simulation.py
+├── Infrastructure/docker/
+│   ├── Dockerfile.pipeline             # working: build and run verified
+│   └── Dockerfile.o3de-headless        # draft, not validated
 ├── Docs/
-│   └── ARCHITECTURE.md                   # Memory & dataflow specs
-├── .gitignore
+│   └── ARCHITECTURE.md
+├── LICENSE
+├── pytest.ini
 └── README.md
 ```
 
@@ -266,7 +282,7 @@ docker build -f Infrastructure/docker/Dockerfile.o3de-headless -t o3de-headless 
 - [x] Architecture diagram
 
 **In progress / planned**
-- [ ] Gem build files (`gem.json`, `CMakeLists.txt`) and a component that loads in the O3DE Editor
+- [ ] Compile the Gem in O3DE and load the component in the Editor (sources, `gem.json`, CMake files and module class written; never compiled, see `Gem/README.md`)
 - [ ] Apply generated scenarios to PhysX bodies and Atom settings inside O3DE
 - [ ] Validate the bridge against a real local model (Ollama)
 - [ ] Headless O3DE container with Vulkan/EGL (draft Dockerfile, not validated)
